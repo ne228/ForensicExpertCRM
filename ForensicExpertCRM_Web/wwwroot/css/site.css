@@ -1,0 +1,38 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+
+.list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.list-item-col {
+    justify-self: center;
+    text-align: center;
+    width: 300px;
+}

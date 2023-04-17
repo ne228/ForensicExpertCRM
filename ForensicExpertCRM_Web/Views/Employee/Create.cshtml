@@ -1,0 +1,116 @@
+﻿@using ForensicExpertCRM_Web.Models.Employee;
+@model EmployeeViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<div>
+
+    <form asp-action="Create" asp-controller="Employee" id="CreateForm">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="create">
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Имя
+                </div>
+
+                <div class="create-input ">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Рэйтинг
+                </div>               
+            </div>
+
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Подразделение
+                </div>
+
+                <div class="create-input check-box-list">
+                    @{
+                        var employeeManagments = ViewBag.EmployeeManagments as List<EmployeeManagmentRadioBtnModel>;
+                        if (employeeManagments == null) employeeManagments = Model.EmployeeManagments;
+
+                        for (int i = 0; i < employeeManagments.Count; i++)
+                        {
+                            <div class="check-box-item">
+                                <input class="form-check-input" type="checkbox" asp-for="EmployeeManagments[i].IsSelected" expertmangament />
+                                <label class="form-check-label" asp-for="@Model.EmployeeManagments[i].IsSelected">@employeeManagments[i].Name</label>
+                                <input type="hidden" asp-for="@Model.EmployeeManagments[i].Id" value="@employeeManagments[i].Id" />
+                                <input type="hidden" asp-for="@Model.EmployeeManagments[i].Name" value="@employeeManagments[i].Name" />
+                            </div>
+                        }
+                    }
+                </div>
+
+
+                <div class="create-item">
+                    <div class="create-label control-label">
+                        Логин
+                    </div>
+
+                    <div class="create-input">
+                        <input asp-for="Login" class="form-control" />
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="create-item">
+                    <div class="create-label control-label">
+                        Пароль
+                    </div>
+
+                    <div class="create-input">
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <input type="submit" class="btn btn-primary m-1" />
+        </div>
+    </form>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        $('form').eq(0).on("change", function (e) {
+            console.log("change");
+            target = e.target;
+            console.log(target);
+            console.log(target.getAttribute("expertmangament"));
+            if (target.getAttribute("expertmangament") == null) return;
+
+            $('input[expertmangament]').each(function () {
+
+                if (e.target != this)
+                    this.checked = false;
+            });
+        })
+
+        //$('form').eq(0).on('submit', function () {
+        //    return $('input[name^=field]:checked:enabled').length == 1;
+        //});
+    </script>
+
+}
+
+
+
+
+

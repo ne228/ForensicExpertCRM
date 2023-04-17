@@ -1,0 +1,111 @@
+﻿@using ForensicExpertCRM_Web.Models.Expertise;
+
+@model ExpertiseViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    var typesExpertise = ViewBag.TypesExpertise as List<TypeExpertise>;
+}
+
+<h1>Create</h1>
+<a asp-action="Create">Создать эксперта</a>
+<div>
+
+    <form asp-action="Create" asp-controller="Expertises" id="CreateForm" enctype="multipart/form-data">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="create">
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Тип экспертизы
+                </div>
+
+                <div class="create-input ">
+                    <select class="form-select" asp-for="TypeExpertiseId" id="typeExpertiseSelect">
+                        @{
+                            foreach (var item in typesExpertise)
+                            {
+                                <option value="@item.Id">@item.Name </option>
+                            }
+                        }
+                    </select>
+
+                    <span asp-validation-for="TypeExpertiseId" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Вопросы эксперту
+                </div>
+
+                <div class="create-input">
+                    <input asp-for="Questions" class="form-control" />
+                    <span asp-validation-for="Questions" class="text-danger"></span>
+                </div>
+            </div>
+
+
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Материалы
+                </div>
+
+                <div class="create-input">
+                    <input type="file" name="uploads" /><br>
+                    <input type="file" name="uploads" /><br>
+                    <input type="file" name="uploads" /><br>
+                </div>
+            </div>
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Срок
+                </div>
+
+                <div class="create-input">
+                    <input asp-for="TermDateTime" class="form-control" />
+                    <span asp-validation-for="TermDateTime" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Тип экспертизы
+                </div>
+
+                <button type="button" id="loadExperts">load experts</button>
+
+                <div class="create-input ">
+                    <select class="form-select" asp-for="ExpertId" id="expertsSelect">
+                        @{
+
+                        }
+                    </select>
+
+                    <span asp-validation-for="ExpertId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <input type="submit" class="btn btn-primary m-1" />
+        </div>
+    </form>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+
+
+
+    </script>
+
+}
+
+
+
+
+

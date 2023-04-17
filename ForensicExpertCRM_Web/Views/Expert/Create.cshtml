@@ -1,0 +1,145 @@
+﻿@using ForensicExpertCRM_Web.Models.Expert;
+@model ExpertViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+<a asp-action="Create">Создать эксперта</a>
+<div>
+
+    <form asp-action="Create" asp-controller="Expert" id="CreateForm">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="create">
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Имя
+                </div>
+
+                <div class="create-input ">
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Рэйтинг
+                </div>
+
+                <div class="create-input">
+                    <input asp-for="Rating" class="form-control" />
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Тип экспертизы
+                </div>
+
+                <div class="create-input check-box-list">
+                    @{
+                        var typeExpertise = ViewBag.TypeExpertise as List<TypeExpertiseCheckBoxModel>;
+                        if (typeExpertise == null) typeExpertise = Model.TypesExpertise;
+
+                        for (int i = 0; i < typeExpertise.Count; i++)
+                        {
+                            <div class="check-box-item">
+                                <input class="form-check-input" type="checkbox" asp-for="TypesExpertise[i].IsChecked" />
+                                <label class="form-check-label" asp-for="@Model.TypesExpertise[i].IsChecked">@typeExpertise[i].Name</label>
+                                <input type="hidden" asp-for="@Model.TypesExpertise[i].Id" value="@typeExpertise[i].Id" />
+                                <input type="hidden" asp-for="@Model.TypesExpertise[i].Name" value="@typeExpertise[i].Name" />
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+
+            <div class="create-item">
+                <div class="create-label control-label">
+                    Подразделение
+                </div>
+
+                <div class="create-input check-box-list">
+                    @{
+                        var expertManagment = ViewBag.ExpertManagments as List<ExpertManagmentRadioBtnModel>;
+                        if (expertManagment == null) expertManagment = Model.ExpertManagments;
+
+                        for (int i = 0; i < expertManagment.Count; i++)
+                        {
+                            <div class="check-box-item">
+                                <input class="form-check-input" type="checkbox" asp-for="ExpertManagments[i].IsSelected" expertmangament />
+                                <label class="form-check-label" asp-for="@Model.ExpertManagments[i].IsSelected">@expertManagment[i].Name</label>
+                                <input type="hidden" asp-for="@Model.ExpertManagments[i].Id" value="@expertManagment[i].Id" />
+                                <input type="hidden" asp-for="@Model.ExpertManagments[i].Name" value="@expertManagment[i].Name" />
+                            </div>
+                        }
+                    }
+                </div>
+
+
+                <div class="create-item">
+                    <div class="create-label control-label">
+                        Логин
+                    </div>
+
+                    <div class="create-input">
+                        <input asp-for="Login" class="form-control" />
+                        <span asp-validation-for="Login" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="create-item">
+                    <div class="create-label control-label">
+                        Пароль
+                    </div>
+
+                    <div class="create-input">
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+            <input type="submit" class="btn btn-primary m-1" />
+        </div>
+    </form>
+</div>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+        $('form').eq(0).on("change", function (e) {
+            console.log("change");
+            target = e.target;
+            console.log(target);
+            console.log(target.getAttribute("expertmangament"));
+            if (target.getAttribute("expertmangament") == null) return;
+
+            $('input[expertmangament]').each(function () {
+
+                if (e.target != this)
+                    this.checked = false;
+            });
+        })
+
+        //$('form').eq(0).on('submit', function () {
+        //    return $('input[name^=field]:checked:enabled').length == 1;
+        //});
+    </script>
+
+}
+
+
+
+
+

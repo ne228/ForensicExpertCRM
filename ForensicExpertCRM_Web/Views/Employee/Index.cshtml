@@ -1,0 +1,46 @@
+﻿@model List<Employee>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<a asp-action="Create" >Создать сотрудника</a>
+
+<div class="list">
+
+    @*Заголовок*@
+
+    <div class="list-item">
+        <div class="list-item-col">
+            Имя
+        </div>
+
+
+        <div class="list-item-col">
+            Кнопки
+        </div>
+    </div>
+
+
+    @*Тело*@
+    @{
+        foreach (var item in Model)
+        {
+            <div class="list-item">
+                <div class="list-item-col">
+                    @item.Name
+                </div>
+
+                <div class="list-item-col">
+                    <a asp-controller="Employee" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-controller="Employee" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-controller="Employee" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </div>
+            </div>
+            <hr />
+        }
+    }
+
+</div>

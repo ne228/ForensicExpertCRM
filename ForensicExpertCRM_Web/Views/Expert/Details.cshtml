@@ -1,0 +1,59 @@
+﻿@model Expert
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+    <div class="details">
+        <div class="details-item">
+            <div class="details-item-label">
+                Имя
+            </div>
+
+            <div class="details-item-value">
+                @Model.Name
+            </div>
+        </div>
+
+        <div class="details-item">
+            <div class="details-item-label">
+                Рэйтинг
+            </div>
+
+            <div class="details-item-value">
+                @Model.Rating
+            </div>
+        </div>
+
+        <div class="details-item">
+            <div class="details-item-label">
+                Подразделение
+            </div>
+
+            <div class="details-item-value">
+                <a asp-action="Details" asp-controller="ExpertManagments" asp-route-Id="@Model.ExpertManagment.Id">@Model.ExpertManagment.Name</a>
+            </div>
+        </div>
+
+        @{
+            foreach (var typeExpertise in Model.TypesExpertise)
+            {
+                <div class="details-item">
+                    <div class="details-item-label">
+                        @typeExpertise.Name
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

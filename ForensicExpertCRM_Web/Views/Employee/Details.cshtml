@@ -1,0 +1,39 @@
+﻿@model Employee
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <hr />
+    <div class="details">
+        <div class="details-item">
+            <div class="details-item-label">
+                Имя
+            </div>
+
+            <div class="details-item-value">
+                @Model.Name
+            </div>
+        </div>
+        <div class="details-item">
+            <div class="details-item-label">
+                Имя
+            </div>
+
+            <div class="details-item-value">
+                <a asp-action="Details" asp-controller="EmployeeManagments" asp-route-Id="@Model.EmployeeManagment.Id">@Model.EmployeeManagment.Name</a>
+            </div>
+        </div>
+        <hr />
+
+    </div>
+
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
