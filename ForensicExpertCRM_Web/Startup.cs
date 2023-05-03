@@ -1,4 +1,5 @@
 using ForensicExpertCRM_Web.Data;
+using ForensicExpertCRM_Web.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,12 @@ namespace Test_OP_Web
                 .AddDefaultTokenProviders();
 
 
+            services.AddScoped<ExpertRepository>();
+            services.AddScoped<EmployeeRepository>();
+            services.AddScoped<Geocoder>(_ => new Geocoder(_.GetRequiredService<HttpClient>(), "f24181bd-5a42-48ff-80aa-ce61e9f67c49"));
+            services.AddScoped<Logic>();
+            services.AddHttpClient();
+
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
 
@@ -68,7 +75,7 @@ namespace Test_OP_Web
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Expertises}/{action=Index}/{id?}");
             });
         }
     }

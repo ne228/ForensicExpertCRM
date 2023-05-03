@@ -1,7 +1,6 @@
-using ForensicExpertCRM;
+using ForensicExpertCRM_Web;
 using ForensicExpertCRM_Web.Data;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
 using Serilog;
 using Serilog.Events;
 using Serilog.Formatting.Json;
@@ -11,14 +10,9 @@ namespace Test_OP_Web
 {
     public class Program
     {
-
-
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
 
-
-            //Functions.Train();
-            //return;
             var app = CreateHostBuilder(args);
 
             var logger = GetLogger();
@@ -42,8 +36,7 @@ namespace Test_OP_Web
                     var userManager = services.GetRequiredService<UserManager<MyUser>>();
                     var rolesManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-                    await DbInitializer.Initialize(context);
-                    await DbInitializer.RoleInitialize(userManager, rolesManager);
+                    await DbInitializer.Initialize(scope, context);
 
                 }
                 catch (Exception ex)
@@ -60,7 +53,6 @@ namespace Test_OP_Web
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
 
 
         private static Serilog.Core.Logger GetLogger()

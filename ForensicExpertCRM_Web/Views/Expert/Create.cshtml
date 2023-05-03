@@ -2,10 +2,10 @@
 @model ExpertViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Создать";
 }
 
-<h1>Create</h1>
+<h1>Создать эксперта</h1>
 <a asp-action="Create">Создать эксперта</a>
 <div>
 
@@ -67,18 +67,19 @@
 
                 <div class="create-input check-box-list">
                     @{
-                        var expertManagment = ViewBag.ExpertManagments as List<ExpertManagmentRadioBtnModel>;
-                        if (expertManagment == null) expertManagment = Model.ExpertManagments;
 
-                        for (int i = 0; i < expertManagment.Count; i++)
-                        {
-                            <div class="check-box-item">
-                                <input class="form-check-input" type="checkbox" asp-for="ExpertManagments[i].IsSelected" expertmangament />
-                                <label class="form-check-label" asp-for="@Model.ExpertManagments[i].IsSelected">@expertManagment[i].Name</label>
-                                <input type="hidden" asp-for="@Model.ExpertManagments[i].Id" value="@expertManagment[i].Id" />
-                                <input type="hidden" asp-for="@Model.ExpertManagments[i].Name" value="@expertManagment[i].Name" />
-                            </div>
-                        }
+                        var expertManagment = ViewBag.ExpertManagments as List<ExpertManagmentRadioBtnModel>;
+
+
+                        <label class="form-label">Выберите подразделение:</label>
+                        <select class="form-select" asp-for="ExpertManagmentId">
+                            @{
+                                foreach (var item in expertManagment)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                        </select>
                     }
                 </div>
 
@@ -132,11 +133,7 @@
             });
         })
 
-        //$('form').eq(0).on('submit', function () {
-        //    return $('input[name^=field]:checked:enabled').length == 1;
-        //});
     </script>
-
 }
 
 

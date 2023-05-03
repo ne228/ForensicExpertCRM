@@ -1,40 +1,43 @@
-﻿@model ForensicExpertCRM_Web.Data.Domain.ExpertManagment
+﻿@using ForensicExpertCRM_Web.Data.Domain;
+@model ExpertManagment
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Управление эксперта";
 }
 
-<h1>Details</h1>
+<h1>Управление эксперта</h1>
 
 <div>
-    <h4>ExpertManagment</h4>
+
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
+            Название
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Name)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
+            Адрес
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Address)
         </dd>
-
     </dl>
 
     @{
-        foreach (var expert in Model.Experts)
-        {   
-         
-            <p>Имя: @expert.Name  </p>
-           
-        }
+        <ul class="list-group">
+            <li align="center" class="list-group-item">
+                <h3>Сотрудники</h3>
+            </li>
+            @foreach (var expert in Model.Experts)
+            {
+                <li class="list-group-item">@expert.Name</li>
+            }
+        </ul>
     }
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Изменить</a> |
+    <a asp-action="Index">Вернуться к списку</a>
 </div>

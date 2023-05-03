@@ -7,8 +7,8 @@
     var typesExpertise = ViewBag.TypesExpertise as List<TypeExpertise>;
 }
 
-<h1>Create</h1>
-<a asp-action="Create">Создать эксперта</a>
+<h1 align="center">Создать экспртизу</h1>
+
 <div>
 
     <form asp-action="Create" asp-controller="Expertises" id="CreateForm" enctype="multipart/form-data">
@@ -33,29 +33,24 @@
                 </div>
             </div>
 
-
-            <div class="create-item">
-                <div class="create-label control-label">
-                    Вопросы эксперту
-                </div>
-
-                <div class="create-input">
-                    <input asp-for="Questions" class="form-control" />
-                    <span asp-validation-for="Questions" class="text-danger"></span>
-                </div>
-            </div>
-
-
-
             <div class="create-item">
                 <div class="create-label control-label">
                     Материалы
                 </div>
 
                 <div class="create-input">
-                    <input type="file" name="uploads" /><br>
-                    <input type="file" name="uploads" /><br>
-                    <input type="file" name="uploads" /><br>
+                    <div id="file-uploads">
+                        <input class="form-control mb-2" type="file" name="uploads" />
+                        <input class="form-control mb-2" type="file" name="uploads" />
+                    </div>
+                    <span asp-validation-for="uploads" class="text-danger"></span>
+                    <br />
+                    <div class="btn btn-success" id="add-file-upload-btn">
+                        Добавить файл
+                    </div>
+                    <div class="btn btn-danger" id="remove-file-upload-btn">
+                        Удалить файл
+                    </div>
                 </div>
             </div>
 
@@ -76,7 +71,7 @@
                     Тип экспертизы
                 </div>
 
-                <button type="button" id="loadExperts">load experts</button>
+
 
                 <div class="create-input ">
                     <select class="form-select" asp-for="ExpertId" id="expertsSelect">
@@ -99,6 +94,30 @@
     <script type="text/javascript">
 
 
+
+        const fileUploadsDiv = document.getElementById('file-uploads');
+        const addFileUploadBtn = document.getElementById('add-file-upload-btn');
+        const removeFileUploadBtn = document.getElementById('remove-file-upload-btn');
+        addFileUploadBtn.addEventListener('click', () => {
+            const fileInput = document.createElement('input');
+            fileInput.className = 'form-control mb-2';
+            fileInput.type = 'file';
+            fileInput.name = 'uploads';
+
+            const br = document.createElement('br');
+
+            fileUploadsDiv.appendChild(fileInput);
+
+        });
+
+
+        removeFileUploadBtn.addEventListener('click', () => {
+            const inputs = fileUploadsDiv.querySelectorAll("input");
+            if (inputs.length > 1) {
+                //fileUploadsDiv.removeChild(inputs[inputs.length - 1]);
+                fileUploadsDiv.removeChild(fileUploadsDiv.lastChild);
+            }
+        });
 
 
     </script>

@@ -13,9 +13,11 @@ namespace ForensicExpertCRM_Web.Models.Expert
 
         public string Password { get; set; }
 
+        public int ExpertManagmentId { get; set; }
+
         public List<TypeExpertiseCheckBoxModel> TypesExpertise { get; set; }
 
-        public List<ExpertManagmentRadioBtnModel> ExpertManagments { get; set; }
+        //public List<ExpertManagmentRadioBtnModel> ExpertManagments { get; set; }
 
 
         public Data.Domain.Expert ToEntity()

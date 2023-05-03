@@ -3,7 +3,6 @@ using ForensicExpertCRM_Web.Models.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Test_OP_Web;
 
 namespace ForensicExpertCRM_Web.Controllers
 {
@@ -45,7 +44,7 @@ namespace ForensicExpertCRM_Web.Controllers
 
                 await _userManager.CreateUserWithoutEmailConfirm(_roleManager, model.Email, model.Password, "user", user);
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Expertises");
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -109,7 +108,7 @@ namespace ForensicExpertCRM_Web.Controllers
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Expertises");
                 }
                 else
                 {
@@ -147,7 +146,7 @@ namespace ForensicExpertCRM_Web.Controllers
         {
             // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Session");
+            return RedirectToAction("Index", "Expertises");
         }
 
 
