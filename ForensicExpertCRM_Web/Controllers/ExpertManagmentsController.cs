@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ForensicExpertCRM_Web.Data;
 using ForensicExpertCRM_Web.Data.Domain;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ForensicExpertCRM_Web.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ExpertManagmentsController : Controller
     {
         private readonly ApplicationDbContext _context;

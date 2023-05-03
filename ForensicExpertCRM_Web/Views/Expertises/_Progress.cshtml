@@ -1,0 +1,69 @@
+﻿@model Expertise
+
+
+@{
+    DateTime currentTime = Model.Accept ? (DateTime)Model.AccpetDateTime : DateTime.Now;
+    string color = Model.Accept ? "bg-success" : "bg-warning";
+
+
+    var maxDays = Model.TermDateTime - Model.CreateDateTime;
+    var passed = currentTime - Model.CreateDateTime;
+    var left = Model.TermDateTime - currentTime;
+
+    var passedPercent = (passed / maxDays) * 100;
+    var leftPercent = (left / maxDays) * 100;
+
+    string daysLeft = Model.Accept ? "" : $"Осталось дней {Math.Floor(left.TotalDays)}";
+
+    if (leftPercent < 10)
+    {
+        passedPercent = 90;
+        leftPercent = 10;
+    }
+
+    if (leftPercent > 90)
+    {
+        leftPercent = 90;
+        passedPercent = 10;
+    }
+    passedPercent = Math.Floor(passedPercent);
+    leftPercent = 100 - passedPercent;
+
+    if (Model.Accept)
+    {
+        passedPercent = 100;
+        leftPercent = 0;
+    }
+
+
+
+    string passedDays = !Model.Accept ? $"Прошло дней: {Math.Floor(passed.TotalDays)}" : $"Закончена за дней: {Math.Floor(passed.TotalDays)}";
+    string leftDays = !Model.Accept ? $"Отсалось дней: {Math.Floor(left.TotalDays)}" : $"";
+}
+
+<div class="my-progress-bar">
+    <div class="date-lable">
+        <div>@Model.CreateDateTime.ToShortDateString()</div>
+        <div class="days">@passedDays</div>
+    </div>
+    <div class="progress">
+
+        <div class="progress-bar @color" role="progressbar" style="width: @passedPercent%" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar bg-secondary" role="progressbar" style="width: @leftPercent%" aria-valuemin="0" aria-valuemax="100"></div>
+
+    </div>
+    <div class="date-lable">
+        <div class="days">@leftDays</div>
+        <div>@Model.TermDateTime.ToShortDateString()</div>
+    </div>
+
+    @if (Model.Accept)
+    {
+        <div>
+            Дата завершения: @Model.AccpetDateTime.Value.ToShortDateString()
+        </div>
+    }
+
+
+
+    </div>

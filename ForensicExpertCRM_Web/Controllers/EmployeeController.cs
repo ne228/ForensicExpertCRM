@@ -2,23 +2,26 @@
 using ForensicExpertCRM_Web.Data.Domain;
 using ForensicExpertCRM_Web.Models.Employee;
 using ForensicExpertCRM_Web.Models.Expert;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Test_OP_Web;
 
 namespace ForensicExpertCRM_Web.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class EmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<MyUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public EmployeeController(ApplicationDbContext context, UserManager<MyUser> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly EmployeeRepository employeeRepository;
+        public EmployeeController(ApplicationDbContext context, UserManager<MyUser> userManager, RoleManager<IdentityRole> roleManager, EmployeeRepository employeeRepository)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            this.employeeRepository = employeeRepository;
         }
         public async Task<IActionResult> Index()
         {
@@ -36,7 +39,7 @@ namespace ForensicExpertCRM_Web.Controllers
                 return NotFound();
             }
 
-            var experts = await _context.Employees.Include(x=>x.EmployeeManagment)
+            var experts = await _context.Employees.Include(x => x.EmployeeManagment)
             .FirstOrDefaultAsync(m => m.Id == id.ToString());
             if (experts == null)
             {
@@ -50,8 +53,8 @@ namespace ForensicExpertCRM_Web.Controllers
         // GET: ExpertManagments/Create
         public IActionResult Create()
         {
-            ViewBag.EmployeeManagments = _context.EmployeeManagments.ToList().EmployeeManagmentToCheckBoxModel();
-
+            
+            ViewBag.EmployeeManagments = _context.EmployeeManagments.ToList();
             return View();
         }
 
@@ -64,25 +67,10 @@ namespace ForensicExpertCRM_Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                var entityEmployee = employee.ToEntity();
-
-                var temp = employee.EmployeeManagments.FirstOrDefault(x => x.IsSelected);
-                var employeeManagment = _context.EmployeeManagments.Include(x => x.Employees).FirstOrDefault(x => x.Id == temp.Id);
-
-                employeeManagment.Employees.Add(entityEmployee);
-
-                //_context.ExpertManagments.FirstOrDefault();
-                var user = await _userManager.CreateUserWithoutEmailConfirm(_roleManager, employee.Login, employee.Password, "user", entityEmployee as Employee);
-
-                if (user == null) new Exception("Ошибка при создании пользователся");
-
-
-                //var expertUser = user as Expert;
-                //expertUser.TypesExpertise = entityExpert.TypesExpertise;
-
-                await _context.SaveChangesAsync();
+                await employeeRepository.CreateAsync(employee.ToEntity(), employee.Login, employee.Password);
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.EmployeeManagments = _context.EmployeeManagments.ToList();
             return View(employee);
         }
 

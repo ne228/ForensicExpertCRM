@@ -1,0 +1,26 @@
+﻿@using ForensicExpertCRM_Web.Models.Expertise;
+@model AcceptRatingViewModel
+
+<form asp-action="AcceptRating">
+    <div class="accept-rating">
+        <div>
+            <label class="form-label">
+                Оцените эксперта
+            </label>
+        </div>
+        <div class="select-rating">
+            <select asp-for="Rating" class="form-select">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </div>
+
+        <span asp-validation-for="Rating" class="text-danger"></span>
+        <input type="hidden" asp-for="ExpertiseId" value="@Model.ExpertiseId" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary mt-1">Отправить отзыв</button>
+
+</form>

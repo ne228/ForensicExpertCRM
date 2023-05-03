@@ -1,0 +1,68 @@
+﻿@using ForensicExpertCRM_Web.Models.Expertise;
+@model AcceptExpertise
+
+<form asp-action="AcceptExpertise" enctype="multipart/form-data">
+
+   
+
+    <div class="create-item">
+        <div class="create-label control-label">
+            Материалы
+        </div>
+
+        <div class="create-input">
+            <div id="file-uploads">
+                <input class="form-control mb-2" type="file" asp-for="uploads" name="uploads" />
+                <input class="form-control mb-2" type="file" asp-for="uploads" name="uploads" />
+            </div>
+            <span asp-validation-for="uploads" class="text-danger"></span>
+            <br />
+            <div class="btn btn-success" id="add-file-upload-btn">
+                Добавить файл
+            </div>
+            <div class="btn btn-danger" id="remove-file-upload-btn">
+                Удалить файл
+            </div>
+        </div>
+    </div>
+
+
+    <input type="hidden" asp-for="ExpertiseId" value="@Model.ExpertiseId" class="form-control" />
+    <button type="submit" class="btn btn-primary mt-1">Отправить экспертизу</button>
+
+</form>
+
+@section scripts {
+
+    <script type="text/javascript">
+
+
+
+        const fileUploadsDiv = document.getElementById('file-uploads');
+        const addFileUploadBtn = document.getElementById('add-file-upload-btn');
+        const removeFileUploadBtn = document.getElementById('remove-file-upload-btn');
+        addFileUploadBtn.addEventListener('click', () => {
+            const fileInput = document.createElement('input');
+            fileInput.className = 'form-control mb-2';
+            fileInput.type = 'file';
+            fileInput.name = 'uploads';
+
+            const br = document.createElement('br');
+
+            fileUploadsDiv.appendChild(fileInput);
+
+        });
+
+
+        removeFileUploadBtn.addEventListener('click', () => {
+            const inputs = fileUploadsDiv.querySelectorAll("input");
+            if (inputs.length > 1) {
+                //fileUploadsDiv.removeChild(inputs[inputs.length - 1]);
+                fileUploadsDiv.removeChild(fileUploadsDiv.lastChild);
+            }
+        });
+
+
+    </script>
+
+}

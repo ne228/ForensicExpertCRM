@@ -11,8 +11,9 @@ namespace ForensicExpertCRM_Web.Models.Employee
 
         public string Password { get; set; }
 
+        public int EmployeeManagmentId { get; set; }
 
-        public List<EmployeeManagmentRadioBtnModel> EmployeeManagments { get; set; }
+        //public List<EmployeeManagmentRadioBtnModel> EmployeeManagments { get; set; }
 
 
         public Data.Domain.Employee ToEntity()
@@ -21,7 +22,10 @@ namespace ForensicExpertCRM_Web.Models.Employee
             {
                 Name = Name,
                 Email = Login,
-                PasswordHash = Password
+                PasswordHash = Password,
+                EmployeeManagmentId = EmployeeManagmentId
+                
+                
             };
      
             return res;

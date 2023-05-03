@@ -2,11 +2,11 @@
 @model EmployeeViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Создать";
 }
 
-<h1>Create</h1>
-
+<h1 align="center">Создать сотрудника</h1>
+<hr />
 <div>
 
     <form asp-action="Create" asp-controller="Employee" id="CreateForm">
@@ -24,35 +24,26 @@
             </div>
 
 
-            <div class="create-item">
-                <div class="create-label control-label">
-                    Рэйтинг
-                </div>               
-            </div>
+
 
 
             <div class="create-item">
-                <div class="create-label control-label">
-                    Подразделение
-                </div>
 
                 <div class="create-input check-box-list">
                     @{
-                        var employeeManagments = ViewBag.EmployeeManagments as List<EmployeeManagmentRadioBtnModel>;
-                        if (employeeManagments == null) employeeManagments = Model.EmployeeManagments;
+                        var expertManagment = ViewBag.EmployeeManagments as List<EmployeeManagment>;
 
-                        for (int i = 0; i < employeeManagments.Count; i++)
-                        {
-                            <div class="check-box-item">
-                                <input class="form-check-input" type="checkbox" asp-for="EmployeeManagments[i].IsSelected" expertmangament />
-                                <label class="form-check-label" asp-for="@Model.EmployeeManagments[i].IsSelected">@employeeManagments[i].Name</label>
-                                <input type="hidden" asp-for="@Model.EmployeeManagments[i].Id" value="@employeeManagments[i].Id" />
-                                <input type="hidden" asp-for="@Model.EmployeeManagments[i].Name" value="@employeeManagments[i].Name" />
-                            </div>
-                        }
+                        <label class="form-label">Выберите подразделение:</label>
+                        <select class="form-select" asp-for="EmployeeManagmentId">
+                            @{
+                                foreach (var item in expertManagment)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            }
+                        </select>
                     }
                 </div>
-
 
                 <div class="create-item">
                     <div class="create-label control-label">
@@ -79,8 +70,8 @@
             </div>
 
 
-
-            <input type="submit" class="btn btn-primary m-1" />
+            <hr />
+            <input type="submit" class="btn btn-primary w-100" value="Создать" />
         </div>
     </form>
 </div>
@@ -103,9 +94,9 @@
             });
         })
 
-        //$('form').eq(0).on('submit', function () {
-        //    return $('input[name^=field]:checked:enabled').length == 1;
-        //});
+                //$('form').eq(0).on('submit', function () {
+                //    return $('input[name^=field]:checked:enabled').length == 1;
+                //});
     </script>
 
 }

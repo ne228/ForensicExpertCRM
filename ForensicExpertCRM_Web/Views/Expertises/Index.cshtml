@@ -4,50 +4,108 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
 
-<a asp-action="Create">Создать экспертизу</a>
+<blockquote align="center" class="blockquote">
+    <h1>Экспертизы</h1>
+    <small class="text-muted"> <a asp-action="Create">Создать экспертизу</a></small>
+</blockquote>
+<br />
+
+
 
 <div class="list">
 
     @*Заголовок*@
 
-    <div class="list-item">
-        <div class="list-item-col">
-            Имя
+    <div class="list-item list-group-item">
+        <div class="list-item-col status">
+            <blockquote class="blockquote">
+                Статус
+            </blockquote>
         </div>
 
         <div class="list-item-col">
-            Рэйтинг
+            <blockquote class="blockquote">
+                Вид экспертизы
+            </blockquote>
         </div>
 
         <div class="list-item-col">
-            Кнопки
+            <blockquote class="blockquote">
+                Эксперт
+            </blockquote>
         </div>
+
+        <div class="list-item-col">
+            <blockquote class="blockquote">
+                Время создания
+            </blockquote>
+        </div>
+
+        <!--
+        <div class="list-item-col">
+            <blockquote class="blockquote">
+                Кнопки
+            </blockquote>
+        </div>
+                -->
     </div>
-
 
     @*Тело*@
     @{
         foreach (var item in Model)
         {
-            <div class="list-item">
-                <div class="list-item-col">
-                    @item.TypeExpertise
-                </div>
+            <a asp-action="Details" asp-route-id="@item.Id">
+                <div class="list-item list-group-item list-group-item-action ">
 
-                <div class="list-item-col">
-                    @item.CreateDateTime
-                </div>
+                    <div class="list-item-col status">
+                        @if (item.Accept)
+                        {
+                            <img class="icon" src="imgs/accept.png" />
+                        }
+                        else
+                        {
+                            <img class="icon" src="imgs/process.png" />
+                        }
+
+                    </div>
+
+                    <div class="list-item-col">
+                        <blockquote class="blockquote">
+                            <p>@item.TypeExpertise.Name</p>
+                        </blockquote>
+                    </div>
 
 
-                <div class="list-item-col">
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <div class="list-item-col">
+
+                        <blockquote class="blockquote">
+                            @item.Expert.Name <br />
+                            <small class="text-muted"> @item.Expert.ExpertManagment.Name</small>
+                        </blockquote>
+
+                    </div>
+
+                    <div class="list-item-col">
+                        
+                        <partial name="_Progress" model="@item" />
+                        <!--
+                        <blockquote class="blockquote">
+                            <p>@item.CreateDateTime</p>
+                        </blockquote>
+                         -->
+                    </div>
+
+                    <!--
+                    <div class="list-item-col list-item-col-btns">
+                        <a asp-action="Edit" asp-route-id="@item.Id"><img class="icon" src="imgs/edit.png" alt="Редактировать" title="Редактировать"> </a>
+                        <a asp-action="Details" asp-route-id="@item.Id"><img class="icon" src="imgs/file.png" alt="Детали" title="Подробная информация"></a>
+                        <a asp-action="Delete" asp-route-id="@item.Id"><img class="icon" src="imgs/remove.png" alt="Удалить" title="Удалить"></a>
+                    </div>
+                    -->
                 </div>
-            </div>
-            <hr />
+            </a>
+
         }
     }
 

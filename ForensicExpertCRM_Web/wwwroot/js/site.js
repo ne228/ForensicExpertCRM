@@ -29,6 +29,10 @@ function setExpertsSelect(json) {
 
 function loadExperts(typeExpertiseId) {
 
+
+    var select = document.getElementById("expertsSelect");
+    select.innerHTML = 'Загрузка...';
+
     $.ajax({
         type: 'GET',
         url: `/Expertises/GetExperts?typeExpertiseId=${typeExpertiseId}`,
