@@ -27,7 +27,21 @@ namespace ForensicExpertCRM_Web.Controllers
         private async Task<Expertise> GetExpertiseAsync(int? expertiseId)
         {
             var user = await _userManager.GetUserAsync(User);
+
+
+
             Expertise expertise = null;
+            if (User.IsInRole("admin"))
+            {
+                expertise = await _context.Expertises
+                    .Include(x => x.TypeExpertise)
+                    .Include(x => x.Files)
+                    .Include(x => x.ExpertFiles)
+                    .Include(x => x.Employee).ThenInclude(x => x.EmployeeManagment)
+                    .Include(x => x.Expert).ThenInclude(x => x.ExpertManagment)
+                    .FirstOrDefaultAsync(m => m.Id == expertiseId);
+            }
+
             if (user is Expert)
             {
                 expertise = await _context.Expertises
@@ -55,7 +69,8 @@ namespace ForensicExpertCRM_Web.Controllers
             return expertise;
         }
 
-        public ExpertisesController(ApplicationDbContext context, UserManager<MyUser> userManager, RoleManager<IdentityRole> roleManager, IWebHostEnvironment appEnvironment, Logic logic)
+        public ExpertisesController(
+            ApplicationDbContext context, UserManager<MyUser> userManager, RoleManager<IdentityRole> roleManager, IWebHostEnvironment appEnvironment, Logic logic)
         {
             _context = context;
             _userManager = userManager;
@@ -65,8 +80,7 @@ namespace ForensicExpertCRM_Web.Controllers
         }
         public async Task<IActionResult> Index()
         {
-
-            //var coord =  await _logic.GetCoordinatesAsync("Санкт-Петербург, проспект Энгельса, 119 ");
+                      
 
             List<Expertise> expertises = new List<Expertise>();
 
@@ -127,9 +141,7 @@ namespace ForensicExpertCRM_Web.Controllers
             return View();
         }
 
-        // POST: ExpertManagments/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "employee")]
@@ -213,7 +225,7 @@ namespace ForensicExpertCRM_Web.Controllers
         public async Task<string> GetExperts(int typeExpertiseId)
         {
             var employee = _userManager.GetUserAsync(HttpContext.User).Result as Employee;
-            if (employee == null) return "Авторизуйстесь для создания экспертизы";
+            if (employee == null) return "Авторизуйтесь для создания экспертизы";
 
 
             var experts = await getExperts(typeExpertiseId, employee.Id);
@@ -245,6 +257,7 @@ namespace ForensicExpertCRM_Web.Controllers
         }
 
         [Authorize(Roles = "expert")]
+
         public async Task<IActionResult> AcceptExpertise(AcceptExpertise model)
         {
             if (ModelState.IsValid)
@@ -271,7 +284,7 @@ namespace ForensicExpertCRM_Web.Controllers
                             await file.CopyToAsync(fileStream);
                         }
 
-                        expertise.ExpertFiles.Add(new MyFile()
+                        expertise.ExpertFiles.Add(new()
                         {
                             Path = path,
                             FileName = fileName

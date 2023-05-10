@@ -1,7 +1,9 @@
 using ForensicExpertCRM_Web.Data;
 using ForensicExpertCRM_Web.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 namespace Test_OP_Web
 {
@@ -53,6 +55,17 @@ namespace Test_OP_Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var supportedCultures = new[]{
+                 new CultureInfo("ru-RU")
+            };
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture("ru-RU"),
+                SupportedCultures = supportedCultures,
+                FallBackToParentCultures = false
+            });
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture("ru-RU");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

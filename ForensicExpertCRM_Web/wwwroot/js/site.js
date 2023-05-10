@@ -21,7 +21,7 @@ function setExpertsSelect(json) {
         var rating = arr_from_json[i]["Rating"];
         var expertId = arr_from_json[i]["Id"];
 
-        let newOption = new Option(`${name} ${rating}`, expertId);
+        let newOption = new Option(`${name} - ${rating}`, expertId);
         select.append(newOption);
     }
     select.selectedIndex = 0;

@@ -19,7 +19,7 @@ public class ApplicationDbContext : IdentityDbContext<MyUser>
     public DbSet<Expertise> Expertises { get; set; }
 
     public DbSet<MyFile> Files { get; set; }
-
+    public DbSet<ExpertFile> ExpertFiles { get; set; }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {

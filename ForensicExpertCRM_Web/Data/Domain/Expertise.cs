@@ -20,8 +20,9 @@
 
         public DateTime TermDateTime { get; set; }
 
+
         public List<MyFile> Files { get; set; }
-        public List<MyFile> ExpertFiles { get; set; }
+        public List<ExpertFile>? ExpertFiles { get; set; }
 
         public TypeExpertise TypeExpertise { get; set; }
 

@@ -1,0 +1,53 @@
+﻿
+
+.question label:before {
+    content: '☆';
+    color: black;
+    margin-left:30px;
+    font-size: 2em;
+}
+
+.question label.on:before {
+    content: '★';
+    color: #ffa500;
+    /*uncomment for iOS */
+    font-size: 2.4em;
+    top: -0.1em;
+    left: -0.1em;
+}
+
+.question input:checked + label:before {
+    content: '★';
+    color: #ffa500;
+    /* uncomment for iOS */
+    font-size: 2.4em;
+    top: -0.1em;
+    left: -0.1em;
+}
+
+.question label {
+    display: inline-block;
+    cursor: pointer;
+    position: relative;
+    padding-left: 25px;
+    margin-right: 15px;
+    font-size: 20px;
+
+}
+
+.question label:before {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    position: absolute;
+    left: 0;
+    margin-top: -40px;
+    border-radius: 10px;
+}
+
+.question input[type=radio] {
+    display: none;
+    -webkit-appearance: none;
+}
+

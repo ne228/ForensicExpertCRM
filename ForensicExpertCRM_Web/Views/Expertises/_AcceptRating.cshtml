@@ -2,25 +2,45 @@
 @model AcceptRatingViewModel
 
 <form asp-action="AcceptRating">
-    <div class="accept-rating">
-        <div>
-            <label class="form-label">
-                Оцените эксперта
-            </label>
-        </div>
-        <div class="select-rating">
-            <select asp-for="Rating" class="form-select">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
+    <div class="accept-rating details-item">
+
+
+        <div class="accept-rating-label">
+            <div>
+                <label class="form-label">
+                    Оцените эксперта:
+                </label>
+            </div>
+            <div class="question" id="q1">
+                <input type="radio" name="rating" id="a1" value="1">
+                <label for="a1"></label>
+                <input type="radio" name="rating" id="a2" value="2">
+                <label for="a2"></label>
+                <input type="radio" name="rating" id="a3" value="3">
+                <label for="a3"></label>
+                <input type="radio" name="rating" id="a4" value="4">
+                <label for="a4"></label>
+                <input type="radio" name="rating" id="a5" value="5">
+                <label for="a5"></label>
+            </div>
         </div>
 
-        <span asp-validation-for="Rating" class="text-danger"></span>
+        @*<span asp-validation-for="Rating" class="text-danger"></span>*@
         <input type="hidden" asp-for="ExpertiseId" value="@Model.ExpertiseId" class="form-control" />
+
+        <div class="accept-rating-btn">
+            <button type="submit" class="btn btn-primary">Отправить оценку</button>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-1">Отправить отзыв</button>
+
 
 </form>
+
+@section scripts {
+
+
+
+}
+
+
+

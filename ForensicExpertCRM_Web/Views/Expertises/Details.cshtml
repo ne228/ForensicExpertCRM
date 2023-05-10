@@ -93,6 +93,9 @@
                     }
 
                 </div>
+
+
+
             </div>
         }
 
@@ -126,7 +129,7 @@
                     </div>
                 </div>
             </div>
-           
+
         </div>
 
 
@@ -136,6 +139,9 @@
         {
             <hr />
             <partial name="_AcceptRating" model="@new AcceptRatingViewModel() { Rating = 0, ExpertiseId = Model.Id }" />
+           
+      
+
         }
 
         @if (User.IsInRole("expert"))
@@ -158,3 +164,5 @@
 <div class="mt-3">
     <a asp-action="Index">Вернуться к списку</a>
 </div>
+
+

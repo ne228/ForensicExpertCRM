@@ -32,6 +32,22 @@ namespace ForensicExpertCRM_Web.Services
         public double Raiting { get; set; }
         public string Name { get; private set; }
 
+        public List<float> ToFloat()
+        {
+
+            var list = new List<float>
+            {
+                (float)Def,
+                (float)Speed,
+                (float)PercentTerm,
+                (float)Destination,
+                (float)Raiting
+            };
+
+            return list;
+
+        }
+
         public ExpertInput(string expertId, string employeeId, int typeExpertiseId, ApplicationDbContext context, Geocoder geocoder)
         {
             this.context = context;
@@ -53,15 +69,21 @@ namespace ForensicExpertCRM_Web.Services
             Id = expertId;
 
         }
-
-        public async Task Init()
+        public double Sigmoid(double value)
         {
 
-            Def = await GetDef();
-            Speed = await GetSpeed();
-            PercentTerm = await GetPercentTerm();
-            Destination = await GetDestination();
-            Raiting = await GetRating();
+            double key = Math.Tanh(value);
+            return key;
+            double k = Math.Exp(value);
+            return k / (1.0f + k);
+        }
+        public async Task Init()
+        {
+            Def = Sigmoid(await GetDef());
+            Speed = Sigmoid(await GetSpeed());
+            PercentTerm = Sigmoid(await GetPercentTerm());
+            Destination = 0;//Sigmoid(await GetDestination());
+            Raiting = Sigmoid(await GetRating());
         }
 
         private async Task<double> GetDef()
@@ -78,7 +100,8 @@ namespace ForensicExpertCRM_Web.Services
             var countExpertise = await context.Expertises.CountAsync(x =>
                      !x.Accept && x.Expert.Id == Expert.Id);
 
-            return countExpertise;
+            var res = countExpertise == 0 ? 0 : 1.0 / countExpertise;
+            return res;
         }
 
         private async Task<double> GetSpeed()

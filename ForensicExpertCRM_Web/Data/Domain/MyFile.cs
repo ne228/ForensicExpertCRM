@@ -7,5 +7,21 @@
         public string FileName { get; set; }
 
         public string Path { get; set; }
+
+        
+
+
+    }
+    public class ExpertFile
+    {
+        public int Id { get; set; }
+
+        public string FileName { get; set; }
+
+        public string Path { get; set; }
+
+      
+
+
     }
 }

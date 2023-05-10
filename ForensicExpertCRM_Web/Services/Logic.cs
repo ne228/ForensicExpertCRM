@@ -1,6 +1,7 @@
 ﻿using ForensicExpertCRM_Web.Data;
 using ForensicExpertCRM_Web.Data.Domain;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
 using System.Net;
@@ -41,7 +42,10 @@ namespace ForensicExpertCRM_Web.Services
                 expertInput.Add(input);
                 expertOut.Add(new ExpertOut(expertInput.LastOrDefault()));
             }
+            expertOut = expertOut.OrderByDescending(x => x.Rating).ToList();
 
+
+            await Console.Out.WriteLineAsync(JsonConvert.SerializeObject(expertInput,Formatting.Indented));
             return expertOut;
         }
 

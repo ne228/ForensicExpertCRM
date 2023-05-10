@@ -7,7 +7,7 @@ namespace ForensicExpertCRM_Web.Data.Domain;
 public class Expert : MyUser
 {
 
-    //public int Id { get; set; }
+   
 
     public string Name { get; set; }
 

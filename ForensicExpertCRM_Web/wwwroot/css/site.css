@@ -65,9 +65,9 @@ body {
     text-align: center;
     flex-direction: column;
 }
-.details-item-label{
 
-    font-weight:600;
+.details-item-label {
+    font-weight: 600;
 }
 
 #file-uploads {
@@ -110,16 +110,17 @@ body {
     color: gray;
 }
 
-
 .accept-rating {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
-.select-rating {
-    margin-left: 20px;
+.accept-rating-label {
+    margin-top: 5px;
+    display:flex;
+    flex-direction:row;
 }
-
 
 .materials {
     display: flex;
@@ -200,17 +201,18 @@ a {
 
 
 .details-item-expert {
-    display:flex;
-    flex-direction:row;
-    justify-content:space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 
 .expert-employee {
     display: flex;
     flex-direction: row;
-    justify-content:space-around;
+    justify-content: space-around;
 }
+
     .expert-employee .details-item {
         margin-left: 5px;
         margin-right: 5px;

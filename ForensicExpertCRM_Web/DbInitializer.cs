@@ -12,9 +12,22 @@ namespace ForensicExpertCRM_Web
     public static class DbInitializer
     {
 
-        private const int CountEmployee = 30;
-        private const int CountExpert = 30;
-        private const int CountExpertise = 30;
+        private const int CountEmployee = 10;
+        private const int CountExpert = 10;
+        private const int CountExpertise = 300;
+        public async static Task Initialize(IServiceScope scope, ApplicationDbContext context)
+        {
+            //context.Database.EnsureDeleted();
+            if (context.Database.EnsureCreated())
+            {
+                await RoleInitialize(scope);
+                await CreateExperts(scope, context);
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+
         private static async Task CreateExperts(IServiceScope scope, ApplicationDbContext context)
         {
             var serviceProvider = scope.ServiceProvider;
@@ -61,7 +74,7 @@ namespace ForensicExpertCRM_Web
             await context.SaveChangesAsync();
 
 
-            List<string> names = File.ReadAllLines(@"Y:\Учеба\ХАХАТОН ХУЙНЯ\ForensicExpertCRM\ForensicExpertCRM_Web\wwwroot\names.txt").ToList();
+            List<string> names = File.ReadAllLines($@"{Directory.GetCurrentDirectory()}\wwwroot\names.txt").ToList();
 
             // Create Experts
             var expertRepostiry = serviceProvider.GetService<ExpertRepository>();
@@ -146,18 +159,7 @@ namespace ForensicExpertCRM_Web
             context.SaveChanges();
         }
 
-        public async static Task Initialize(IServiceScope scope, ApplicationDbContext context)
-        {
-            //context.Database.EnsureDeleted();
-            if (context.Database.EnsureCreated())
-            {
-                await RoleInitialize(scope);
-                await CreateExperts(scope, context);
-
-                await context.SaveChangesAsync();
-            }
-        }
-
+        
         public async static Task RoleInitialize(IServiceScope scope)
         {
 
